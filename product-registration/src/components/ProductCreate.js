@@ -1,114 +1,161 @@
-// Define the ProductCreate component
-function ProductCreate() {
+import React, { useState } from "react";
 
-  // Define styles for the "Back to Main Page" button
-  const backButtonStyle = {
-    marginTop: 15,              // Space above the button
-    marginLeft: 15,             // Space to the left
-    backgroundColor: "gray",    // Gray background color
-    color: "white",             // White text color
-    padding: "10px 20px",       // Padding: 10px top/bottom, 20px left/right
-    border: "none",             // No border
-    borderRadius: 5,            // Rounded corners
-    cursor: "pointer",          // Cursor changes to pointer on hover
-    fontSize: 16,               // Text size
-  };
+function ProductCreate({ onAddProduct }) {
 
-  // JSX returned by the component
-  return (
-    <div
-      style={{
-        backgroundColor: "#f4f4f4",        // Light gray background for the form container
-        width: 600,                        // Set fixed width of the form
-        borderRadius: 5,                   // Rounded corners for the box
-        padding: "20px 40px 20px 20px",    // Padding: top/right/bottom/left
-        margin: "10px auto",               // Vertical margin and horizontal centering
-        fontFamily: "Arial, sans-serif",   // Use Arial font
-      }}
-    >
+    const [productName, setProductName] = useState("");
+    const [productCode, setProductCode] = useState("");
+    const [releaseDate, setReleaseDate] = useState("");
+    const [productCategory, setProductCategory] = useState("Electronics");
+    const [productDescription, setProductDescription] = useState("");
 
-      <h1 style={{ color: "blue" }}>Product Create Page</h1>
+    const saveProduct = () => {
 
-      <label>Product Name</label><br />
-      <input
-        type="text"
-        placeholder="Product Name"
-        style={{
-          width: "100%",           // Full width input
-          padding: 8,              // Inner space
-          marginBottom: 15         // Space below the input
-        }}
-      /><br />
+        if (!productName) {
+            alert("Product name is required.");
+            return;
+        }
 
-      <label>Product Code</label><br />
-      <input
-        type="text"
-        placeholder="Product Code"
-        style={{
-          width: "100%",           // Full width
-          padding: 8,              // Inner space
-          marginBottom: 15         // Bottom margin
-        }}
-      /><br />
+        if (!productCode) {
+            alert("Product code is required.");
+            return;
+        }
 
-      <label>Release Date</label><br />
-      <input
-        type="date"
-        style={{
-          width: "100%",           // Full width
-          padding: 8,              // Padding inside input
-          marginBottom: 15         // Margin below input
-        }}
-      /><br />
+        const newProduct = {
+            productName,
+            productCode,
+            releaseDate,
+            productCategory,
+            productDescription,
+        };
 
-      <label>Product Category</label><br />
-      <select
-        style={{
-          width: "100%",           // Full width dropdown
-          padding: 8,              // Padding for text space
-          marginBottom: 15         // Space below dropdown
-        }}
-      >
-        <option>Electronics</option>
-        <option>Clothing</option>
-        <option>Books</option>
-        <option>Home & Kitchen</option>
-        <option>Toys & Games</option>
-        <option>Health & Beauty</option>
-      </select><br />
+        onAddProduct(newProduct);
 
-      <label>Product Description</label><br />
-      <textarea
-        placeholder="Product Description"
-        rows={4}
-        style={{
-          width: "100%",           // Take full width of container
-          padding: 8,              // Inner spacing
-          marginBottom: 20         // Space below textarea
-        }}
-      ></textarea><br />
+        alert("Product added successfully!");
 
-      <button
-        style={{
-          backgroundColor: "blue",   // Blue background
-          color: "white",            // White text
-          padding: "10px 20px",      // Padding inside button
-          border: "none",            // No border
-          borderRadius: 5,           // Rounded corners
-          cursor: "pointer",         // Pointer on hover
-          fontSize: 16               // Font size
-        }}
-      >
-        Save
-      </button>
+        setProductName("");
+        setProductCode("");
+        setReleaseDate("");
+        setProductCategory("Electronics");
+        setProductDescription("");
+    };
 
-      <button style={backButtonStyle}>
-        Back to Main Page
-      </button>
+    const backButtonStyle = {
+        marginTop: 15,
+        marginLeft: 15,
+        backgroundColor: "gray",
+        color: "white",
+        padding: "10px 20px",
+        border: "none",
+        borderRadius: 5,
+        cursor: "pointer",
+        fontSize: 16,
+    };
 
-    </div>
-  );
+    return (
+        <div
+            style={{
+                backgroundColor: "#f4f4f4", // Light gray background for the form container
+                width: 600, // Fixed width
+                borderRadius: 5, // Rounded corners
+                padding: "20px 40px 20px 20px", // Inner spacing
+                margin: "10px auto", // Center horizontally with margin top/bottom
+                fontFamily: "Arial, sans-serif", // Font styling
+            }}
+        >
+            {/* Title of the page */}
+            <h1 style={{ color: "blue" }}>Product Create Page</h1>
+
+            {/* Label for product name input */}
+            <label>Product Name</label>
+            <br />
+            {/* Input field bound to productName state */}
+            <input
+                type="text"
+                value={productName} // Controlled input value
+                onChange={(e) => setProductName(e.target.value)} // Update state on user input
+                placeholder="Product Name"
+                style={{ width: "100%", padding: 8, marginBottom: 15 }} // Styling
+            />
+            <br />
+
+            {/* Label for product code input */}
+            <label>Product Code</label>
+            <br />
+            {/* Input field bound to productCode state */}
+            <input
+                type="text"
+                value={productCode} // Controlled input value
+                onChange={(e) => setProductCode(e.target.value)} // Update state on user input
+                placeholder="Product Code"
+                style={{ width: "100%", padding: 8, marginBottom: 15 }} // Styling
+            />
+            <br />
+
+            {/* Label for release date input */}
+            <label>Release Date</label>
+            <br />
+            {/* Date input bound to releaseDate state */}
+            <input
+                type="date"
+                value={releaseDate} // Controlled input value
+                onChange={(e) => setReleaseDate(e.target.value)} // Update state on user input
+                style={{ width: "100%", padding: 8, marginBottom: 15 }} // Styling
+            />
+            <br />
+
+            {/* Label for category selection */}
+            <label>Product Category</label>
+            <br />
+            {/* Select dropdown bound to productCategory state */}
+            <select
+                value={productCategory} // Controlled select value
+                onChange={(e) => setProductCategory(e.target.value)} // Update state on change
+                style={{ width: "100%", padding: 8, marginBottom: 15 }} // Styling
+            >
+                {/* Options for category */}
+                <option>Electronics</option>
+                <option>Clothing</option>
+                <option>Books</option>
+                <option>Home & Kitchen</option>
+                <option>Toys & Games</option>
+                <option>Health & Beauty</option>
+            </select>
+            <br />
+
+            {/* Label for product description */}
+            <label>Product Description</label>
+            <br />
+            {/* Textarea bound to productDescription state */}
+            <textarea
+                value={productDescription} // Controlled textarea value
+                onChange={(e) => setProductDescription(e.target.value)} // Update state on user input
+                placeholder="Product Description"
+                rows={4} // Number of visible text lines
+                style={{ width: "100%", padding: 8, marginBottom: 20 }} // Styling
+            ></textarea>
+            <br />
+
+            {/* Save button triggers saveProduct function */}
+            <button
+                onClick={saveProduct} // On click event handler
+                style={{
+                    backgroundColor: "blue",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: "none",
+                    borderRadius: 5,
+                    cursor: "pointer",
+                    fontSize: 16,
+                }}
+            >
+                Save
+            </button>
+
+            <button style={backButtonStyle}>
+                Back to Main Page
+            </button>
+        </div>
+    );
 }
 
-// Export the component so it can be imported in other files
 export default ProductCreate;
